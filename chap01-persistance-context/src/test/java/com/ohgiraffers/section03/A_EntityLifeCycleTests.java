@@ -122,6 +122,9 @@ public class A_EntityLifeCycleTests {
 
         try {
             entityManager.persist(newMenu);
+            // persist 메소드를 호출하여 영속 상태로 만든다.
+            // persist 메소드를 호출하면 영속성 컨텍스트에 관리되며, 트랜잭션이 커밋될 때 데이터베이스에 삽입
+            // 트랜잭션이 커밋될 때 영속성 컨텍스트의 변경 사항이 데이터베이스에 반영
             newMenu.setMenuName("키위전");
             transaction.commit();
 
@@ -205,4 +208,12 @@ public class A_EntityLifeCycleTests {
         // then
         assertEquals(null, reFoundMenu);
     }
+
+    /*
+    * 엔티티 매니저 :  영속성 컨텍스트를 통해 엔티티 객체를 데이터베이스에 저장하거나 조회하는 작업을 수행
+    * 영속성 컨텍스트 :  엔티티 객체를 관리
+    *                 데이터베이스와의 상호작용을 효율적으로 처리
+    *                 동일한 트랜잭션 내에서 동일한 엔티티 객체를 보장 즉, 같은 엔티티를 여러 번 조회해도 동일한 객체를 반환
+    *                 트랜잭션이 끝날 때 엔티티 객체의 변경 사항을 자동으로 감지하여 데이터베이스에 반영
+    * */
 }

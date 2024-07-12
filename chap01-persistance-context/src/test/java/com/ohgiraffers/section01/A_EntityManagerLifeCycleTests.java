@@ -30,14 +30,22 @@ public class A_EntityManagerLifeCycleTests {
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager entityManager;
 
-    @BeforeAll // 테스트 클래스 전체가 시작되기 전 한 번만 실행되는 메소드 정의
+    @BeforeAll
+    // 테스트 클래스 전체가 시작되기 전 한 번만 실행되는 메소드 정의
+    // @BeforeAll 메소드는 반드시 static
+
+    // JPA 엔티티 매니저 팩토리를 초기화
     public static void initFactory() {
         entityManagerFactory = Persistence.createEntityManagerFactory("jpatest");
+        // "jpatest"라는 이름의 영속성 유닛을 사용하여 엔티티 매니저 팩토리를 생성
     }
 
     @BeforeEach
+    // 각 메소드가 실행되기 전에 실행되는 메소드
+    // 각 메소드가 실행되기 전에 필요한 초기화 작업을 수행
     public void initManager() {
         entityManager = entityManagerFactory.createEntityManager();
+        // JPA 엔티티 매니저를 초기화하고 새로운 엔티티 매니저를 생성
     }
 
     @AfterAll // 테스트 클래스 전체가 진행된 후 한 번만 실행되는 메소드 정의
