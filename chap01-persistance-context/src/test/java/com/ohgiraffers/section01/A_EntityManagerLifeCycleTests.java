@@ -52,6 +52,7 @@ public class A_EntityManagerLifeCycleTests {
     }
 
     @AfterEach
+    //  테스트 메서드가 실행된 후에 특정 메서드를 실행하고자 할 때 사용
     public void closeManager() {
         entityManager.close();
     }
