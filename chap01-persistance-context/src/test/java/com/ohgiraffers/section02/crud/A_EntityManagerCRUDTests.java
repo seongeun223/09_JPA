@@ -1,12 +1,9 @@
 package com.ohgiraffers.section02.crud;
-
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
-
 public class A_EntityManagerCRUDTests {
 
     private static EntityManagerFactory entityManagerFactory;
@@ -54,8 +51,10 @@ public class A_EntityManagerCRUDTests {
 
     @DisplayName("새로운 메뉴 추가 테스트")
     @Test
+    // 해당 메서드가 테스트 메서드임을 나타낸다.
     public void insertNewMenuTest() {
         //given
+        // 테스트의 사전 조건을 설정하는 부분 여기서는 새로운 Menu 객체를 생성하고 필요한 속성들을 설정
         Menu menu = new Menu();
         menu.setMenuName("JPA 테스트용 신규 메뉴");
         menu.setMenuPrice(50000);
@@ -75,7 +74,9 @@ public class A_EntityManagerCRUDTests {
 
         // then
         // 영속성 컨테스트에 menu가 있는지 확인
+        // 테스트의 결과를 검증하는 부분
         Assertions.assertTrue(entityManager.contains(menu));
+        // entityManager.contains(menu)을 사용하여 객체가 영속성 컨텍스트에 포함되어 있는지 확인
     }
 
     @DisplayName("메뉴 이름 수정 테스트")
