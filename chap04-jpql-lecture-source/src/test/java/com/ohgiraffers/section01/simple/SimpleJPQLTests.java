@@ -171,4 +171,32 @@ public class SimpleJPQLTests {
             System.out.println(integer);
         }
     }
+
+    @Test
+    @DisplayName("in 연산자를 활용한 조회 테스트")
+    void test7() {
+        // given
+        // when
+        String jpql = "select m from menu_section01 m where m.categoryCode in(6,7) " +
+                "order by m.menuCode desc";
+
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
+
+        // then
+        assertNotNull(menuList);
+        menuList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("like 연산자를 활용한 조회 테스트")
+    void test8() {
+        // given
+        // when
+        String jpql = "select m from menu_section01 m where m.menuName like '%마늘%'";
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
+
+        // then
+        assertNotNull(menuList);
+        menuList.forEach(System.out::println);
+    }
 }
