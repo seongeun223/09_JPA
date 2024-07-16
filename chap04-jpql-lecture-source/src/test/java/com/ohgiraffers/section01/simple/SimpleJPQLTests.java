@@ -101,7 +101,7 @@ public class SimpleJPQLTests {
         String jpql = "select m from menu_section01 m where m.menuCode = 7";
 
         TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
-        // 반환 타입을 매핑한 엔티티 타입으로
+        // 반환 타입을 매핑한 엔티티 타입으로 설정
         Menu resultMenuName = query.getSingleResult(); // 결과 반환
 
         // then
@@ -119,7 +119,7 @@ public class SimpleJPQLTests {
         String jpql = "select m from menu_section01 m";
 
         TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
-        // 반환 타입을 매핑한 엔티티 타입으로
+        // 반환 타입을 매핑한 엔티티 타입으로 설정
         List<Menu> menuList = query.getResultList(); // 결과 반환
 
         // then
