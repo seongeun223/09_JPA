@@ -131,4 +131,44 @@ public class SimpleJPQLTests {
         }
 
     }
+
+    @Test
+    @DisplayName("Query를 이용한 다중행 조회 테스트")
+    public void test5() {
+
+        // given
+        // when
+        String jpql = "select m from menu_section01 m";
+
+        Query query = entityManager.createQuery(jpql);
+
+        List<Menu> menuList = query.getResultList(); // 결과 반환
+
+        // then
+        assertNotNull(menuList);
+
+//        menuList.forEach(System.out::println);
+        for (Menu menu : menuList) {
+            System.out.println(menu);
+        }
+    }
+
+    @Test
+    @DisplayName("distinct를 사용한 중복제거 여러 행 조회 테스트")
+    void test6() {
+
+        // given
+        // when
+        String jpql = "select distinct m.categoryCode from menu_section01 m";
+        TypedQuery<Integer> query = entityManager.createQuery(jpql, Integer.class);
+
+        List<Integer> categoryList = query.getResultList();
+
+        // then
+        assertNotNull(categoryList);
+//        categoryList.forEach(System.out::println);
+        for (Integer integer : categoryList) {
+            System.out.println(integer);
+        }
+    }
 }
