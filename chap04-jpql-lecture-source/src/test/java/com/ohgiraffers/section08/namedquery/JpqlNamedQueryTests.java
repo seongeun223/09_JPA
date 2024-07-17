@@ -62,8 +62,26 @@ public class JpqlNamedQueryTests {
         String menuName = "홍어마카롱";
         // when
         List<Menu> menuList =
-                // select m from menu_section08 m
+                // select m from menu_section08 m where m.menuName = :menuName
                 entityManager.createNamedQuery("section08.namedquery.Menu.findByMenuName", Menu.class)
+                        .setParameter("menuName", menuName)
+                        .getResultList();
+        // then
+        assertThat(menuList).isNotNull();
+        // assertNotNull(menuList);
+        menuList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("@NamedQuery - findByMenuNameLike")
+    void test3() {
+
+        // given
+        String menuName = "밥";
+        // when
+        List<Menu> menuList =
+                // select m from menu_section08 m where m.menuName like concat('%', :menuName, '%')
+                entityManager.createNamedQuery("section08.namedquery.Menu.findByMenuNameLike", Menu.class)
                         .setParameter("menuName", menuName)
                         .getResultList();
         // then

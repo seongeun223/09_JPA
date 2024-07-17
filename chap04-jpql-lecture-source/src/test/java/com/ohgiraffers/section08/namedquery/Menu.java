@@ -29,6 +29,13 @@ import org.hibernate.annotations.NamedQuery;
                 query = """
                         select m from menu_section08 m where m.menuName = :menuName
                         """
+        ),
+        // 밥 들어간 메뉴 이름을 전부 조회하는 JPQL
+        @NamedQuery(
+                name = "section08.namedquery.Menu.findByMenuNameLike",
+                query = """
+                        select m from menu_section08 m where m.menuName like concat('%', :menuName, '%')
+                        """
         )
 })
 public class Menu {
