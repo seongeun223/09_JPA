@@ -5,6 +5,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class PagingTests {
 
     private static EntityManagerFactory entityManagerFactory;
@@ -42,6 +46,20 @@ public class PagingTests {
     void test() {
 
         // given
+        int offset= 5; // 조회를 건너뛸 행의 수
+        int limit = 10; // 한번에 조회할 행의 수
+
+        //when
+        String jpql = "select m from menu_section04 m order by m.menuCode desc";
+
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+        //then
+
+        assertNotNull(menuList);
+        menuList.forEach(System.out::println);
 
     }
 }
