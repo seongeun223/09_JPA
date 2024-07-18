@@ -5,7 +5,14 @@ import com.ohgiraffers.springdatajpa.menu.model.entity.Menu;
 import com.ohgiraffers.springdatajpa.menu.model.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,5 +44,29 @@ public class MenuService {
 
         return modelMapper.map(menu, MenuDTO.class);
 
+    }
+
+    public List<MenuDTO> findMenuList() {
+
+        List<Menu> menuList =
+                menuRepository.findAll();
+                //menuRepository.findAll(Sort.by("menuPrice").descending());
+
+        return menuList.stream()
+                .map(menu -> modelMapper.map(menu, MenuDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public Page<MenuDTO> findAllMenus(Pageable pageable) {
+
+        // page 파라미터가 Pageable의 number로 넘어옴
+        // 조회했을 때는 인덱스 기준이 되기 때문에 -1 처리
+        // PageRequest.of -> Pageable 객체 조작
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(), Sort.by("menuCode").descending());
+
+        Page<Menu> menuList = menuRepository.findAll(pageable);
+
+        return menuList.map(menu -> modelMapper.map(menu, MenuDTO.class));
     }
 }
