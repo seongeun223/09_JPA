@@ -2,7 +2,9 @@ package com.ohgiraffers.springdatajpa.menu.controller;
 
 import com.ohgiraffers.springdatajpa.common.Pagenation;
 import com.ohgiraffers.springdatajpa.common.PagingButtonInfo;
+import com.ohgiraffers.springdatajpa.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.springdatajpa.menu.model.dto.MenuDTO;
+import com.ohgiraffers.springdatajpa.menu.model.entity.Category;
 import com.ohgiraffers.springdatajpa.menu.model.service.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -78,4 +78,34 @@ public class MenuController {
 
         return "menu/list";
     }
+
+    @GetMapping("/querymethod")
+    public void queryMethodPage() {}
+
+    @GetMapping("/search")
+    public String findByMenuPrice(@RequestParam Integer menuPrice, Model model) {
+
+        log.info("menuPrice ============ {}", menuPrice );
+
+        List<MenuDTO> menuList = menuService.findByMenuPrice(menuPrice);
+
+        model.addAttribute("menuList", menuList);
+        model.addAttribute("menuPrice", menuPrice);
+
+        return "menu/searchResult";
+    }
+
+    @GetMapping("/regist")
+    public void registPage() {}
+
+    @GetMapping(value = "category", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<CategoryDTO> categoryPage() {
+
+        List<CategoryDTO> categoryList = menuService.findAllCategory();
+        log.info("categoryList =========== {}", categoryList);
+
+        return categoryList;
+    }
+
 }

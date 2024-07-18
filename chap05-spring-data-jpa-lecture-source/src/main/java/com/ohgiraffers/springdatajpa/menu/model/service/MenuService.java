@@ -1,7 +1,10 @@
 package com.ohgiraffers.springdatajpa.menu.model.service;
 
+import com.ohgiraffers.springdatajpa.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.springdatajpa.menu.model.dto.MenuDTO;
+import com.ohgiraffers.springdatajpa.menu.model.entity.Category;
 import com.ohgiraffers.springdatajpa.menu.model.entity.Menu;
+import com.ohgiraffers.springdatajpa.menu.model.repository.CategoryRepository;
 import com.ohgiraffers.springdatajpa.menu.model.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,10 +23,12 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
     private final ModelMapper modelMapper;
+    private final CategoryRepository categoryRepository;
 
-    public MenuService(MenuRepository menuRepository, ModelMapper modelMapper) {
+    public MenuService(MenuRepository menuRepository, ModelMapper modelMapper, CategoryRepository categoryRepository) {
         this.menuRepository = menuRepository;
         this.modelMapper = modelMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     public MenuDTO findMenuByCode(int menuCode) {
@@ -68,5 +73,26 @@ public class MenuService {
         Page<Menu> menuList = menuRepository.findAll(pageable);
 
         return menuList.map(menu -> modelMapper.map(menu, MenuDTO.class));
+    }
+
+    public List<MenuDTO> findByMenuPrice(Integer menuPrice) {
+
+        List<Menu> menuList = null;
+
+        if(menuPrice == 0) {
+            menuList = menuRepository.findAll();
+        } else if (menuPrice > 0) {
+            menuList = menuRepository.findMenuByMenuPriceEquals(menuPrice);
+//                    Sort.by("menuPrice").descending());
+        }
+
+        return menuList.stream()
+                .map(menu -> modelMapper.map(menu, MenuDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<CategoryDTO> findAllCategory() {
+
+        List<Category> categoryList = categoryRepository.
     }
 }
