@@ -32,6 +32,12 @@ public class MenuService {
         this.categoryRepository = categoryRepository;
     }
 
+    /**
+     * 메소드 정보 : 메뉴코드로 메뉴를 찾는 메소드
+     * @param menuCode : 찾을 메뉴의 메뉴 코드
+     * @return
+     */
+    // /** Enter
     public MenuDTO findMenuByCode(int menuCode) {
 
         // MenuDTO -> 일반 클래스
@@ -94,7 +100,13 @@ public class MenuService {
 
     public List<CategoryDTO> findAllCategory() {
 
-        List<Category> categoryList = categoryRepository.findAll();
+//        List<Category> categoryList = categoryRepository.findAll();
+
+// JPQL
+//        List<Category> categoryList = categoryRepository.findAllCategoryByJPQL();
+
+        // Native Query 사용
+        List<Category> categoryList = categoryRepository.findAllCategoryByNativeQuery();
 
         return categoryList.stream()
                 .map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
