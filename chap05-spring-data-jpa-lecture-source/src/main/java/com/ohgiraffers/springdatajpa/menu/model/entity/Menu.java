@@ -10,6 +10,8 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+//@Builder(toBuilder = true)
+// 원하는 것만 설정해서 바꿀 수 있음
 public class Menu {
 
     @Id
