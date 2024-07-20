@@ -1,8 +1,6 @@
 package com.ohgiraffers.springdatajpa.menu.model.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Table(name = "tbl_menu")
 @NoArgsConstructor
