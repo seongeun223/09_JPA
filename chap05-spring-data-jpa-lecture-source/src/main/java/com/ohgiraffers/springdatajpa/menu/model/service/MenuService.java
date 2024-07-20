@@ -26,6 +26,10 @@ public class MenuService {
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
 
+    // 엔티티는 데이터베이스의 구조를 반영하는 객체
+    // DTO는 계층 간 데이터 전송을 위한 객체
+    // 엔티티는 데이터베이스와 직접 연결되어 CRUD 작업을 수행, DTO는 데이터 전송 목적으로만 사용
+
     public MenuService(MenuRepository menuRepository, ModelMapper modelMapper, CategoryRepository categoryRepository) {
         this.menuRepository = menuRepository;
         this.modelMapper = modelMapper;
